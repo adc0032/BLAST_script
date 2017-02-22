@@ -2,23 +2,23 @@
 
 # BLAST_script
 
-```ruby
-#copy over fasta files from class shared to the guest lecture directory
-#use -R to tell it to copy recursively
 
-#Build databases: from three fastas we are using; nucleotide databases
-        module load blast+
-        makeblastdb -in ATchrV.fasta -dbtype nucl
-        makeblastdb -in ATcp.fasta -dbtype nucl
-        makeblastdb -in ATmt.fasta -dbtype nucl
-#show the files types and what they are
-less /apps/bio/unzipped/genomes/Arabidopsis_thaliana/README
+##Step One: Locate Files
+Copy all fasta files from appropraite folders to the directly that you are working in.
+If copying and entire directory, use `-R` to copy the directory over 
 
-#insert a symbolic link ln -s and then the path
-    ln -s /apps/bio/unzipped/genomes/Arabidopsis_thaliana/ 
-    
-#thinking about the out format to parse
-        #outfmt -options
+To see what the file endings mean, look at the read me in the genomes unzipped file
+        Example: `less /apps/bio/unzipped/genomes/Arabidopsis_thaliana/README`
+        
+To create a symbolic link to the path: 
+        `ln -s /apps/bio/unzipped/genomes/Arabidopsis_thaliana/`
+
+###Step Two: Building Databases
+Load the module from blast+
+Command: `makeblastdb -in FILE.fasta -dbtype TYPE_WANTED`
+
+###Step Three: Choosing an out format
+
         #blastn -query test.fasta -db ATmt.fasta -outfmt [test type #] | less
             #alignment view options:
                 #0 = Pairwise,
