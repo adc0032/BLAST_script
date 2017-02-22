@@ -40,6 +40,7 @@ Alignment view options:
         17 = Sequence Alignment/Map (SAM)
 
 ###Building Databases Containing Multiple Fasta Files
+
         **Formatting**: `-db "database 1" "database2" "database3"`       
         **Example Code**: `blastn -db "ATmt.fasta ATcp.fasta ATchrV.fasta Arabidopsis_thaliana/CHR_I/NC_003070.gbk                                 Arabidopsis_thaliana/CHR_II/NC_003071.gbk Arabidopsis_thaliana/CHR_III/NC_003074.gbk" -query test.fasta -outfmt 7 | less -S`
 
@@ -52,6 +53,6 @@ Limit to one hit per query, and limit the e value
 
         Note: We dropped one cause we got 578 in the count not 579
         
- ###Finding "Dropped" sequences (No Hits)
+###Finding "Dropped" sequences (No Hits)
         `NUM=$(blastn -db "ATmt.fasta ATcp.fasta ATchrV.fasta Arabidopsis_thaliana/CHR_I/NC_003070.gbk                                             Arabidopsis_thaliana/CHR_II/NC_003071.gbk Arabidopsis_thaliana/CHR_III/NC_003074.gbk" -query test.fasta -outfmt 7 -evalue               0.00001 -max_target-seqs 1 | grep -c ' 0 hits ' ) && echo No_hits $NUM >> RawCounts.txt`
 
