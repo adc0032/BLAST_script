@@ -1,24 +1,22 @@
 # BLAST_script
+BLAST stands for Basic Local Alignment Search Tool. There are quite a few different types of blast options: 
+- BLASTN: Nucleotide
+- BLASTP: Protein 
+- And less common BLASTX, TBLASTN, and TBLASTX
+
+BLASTN, which is what is used in this spript, uses a nucleotide query and a nucleotide database. It matches oligos to a genome.  
+A blast output generally provides raw scores, and Expect Value (E-value), and a list of alignments. However, there are many ways to limit the output, all of which can be found using `blastn --help`. 
+
+Two of these limitations were used in our script to set a  limit of one hit per query and the E-value digits:   
+`-evalue` and `max_target_seqs` 
+
+The general design of a blast from the command line is: 
+`blastn -db "DATABASE1" DATABASE2"... -query "FILE.fasta" -output "OUT TYPE" -[limit output: -evalue -Max_target_seqs or sorting of results]`
+
+Example:   
+`blastn -db "ATmt.fasta ATcp.fasta ATchrV.fasta Arabidopsis_thaliana/CHR_I/NC_003070.gbk Arabidopsis_thaliana/CHR_II/NC_003071.gbk Arabidopsis_thaliana/CHR_III/NC_003074.gbk" -query test.fasta -outfmt 7 -evalue 0.00001 -max_target-seqs 1| egrep -v '^#'| sed 's/[[:space:]]1_\/home.*NC_[0-9]*[[:space:]]/\tNT\t/'| awk '{print $1,$2}' | sort | uniq | awk '{print $2}' | sort | uniq -c | sort -n > RawCounts.txt`
 
 
-##Locate Files
-Copy all fasta files from appropraite folders to the directly that you are working in.
-If copying and entire directory, use `-R` to copy the directory over 
-
-To see what the file endings mean, look at the read me in the genomes unzipped file
-
-**Example:** `less /apps/bio/unzipped/genomes/Arabidopsis_thaliana/README`
-        
-To create a symbolic link to the path: 
-
-**Example:**`ln -s /apps/bio/unzipped/genomes/Arabidopsis_thaliana/`
-
-##Building Databases
-Load the module from blast+
-
-**Command:** `makeblastdb -in FILE.fasta -dbtype TYPE_WANTED`
-
-##Choosing an out format
 
 **Example Command:** `blastn -query test.fasta -db ATmt.fasta -outfmt [test type #] | less`
  `blastn -query test.fasta -db ATmt.fasta -outfmt 7 | less`
